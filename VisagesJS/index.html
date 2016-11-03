@@ -4,7 +4,7 @@
 -->
 <html>
     <head>
-        <title>Les chenilles</title>
+        <title>Visages Animés</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <style>
@@ -21,20 +21,15 @@
                 margin:auto;
             }
         </style>
-        <script src="backside.js"></script>
+        <script src="scripts/Visage.js"></script>
     </head>
     <body onload="init()">
         <div id="wrapper">
-            <h1>Les chenilles</h1>
+            <h1>Les visages rebondissants</h1>
             <!-- le boutons pour lancer et interrompre l'animation -->
             <div>
-                <p> Nombre d'anneaux: <input type='text' id='anneaux' size='3'> </p> 
-                <p> Nombre de chenilles <input type='text' id='nbchenilles' size='3'</p>
-                <p> Rayon <input type='text' id='rayon' size='3'</p>
-                <p>
-                <button id="settings">Applique changements</button>
                 <button id="startBtn">Start</button>
-                <button id="stopBtn" disabled>Stop</button> </p>
+                <button id="stopBtn" disabled>Stop</button>
             </div>
             <!-- le canvas pour dessiner -->
             <canvas  id="myCanvas" width="500" height ="500">

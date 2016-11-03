@@ -32,8 +32,24 @@ Chenille.prototype.dessiner = function(){
 };
 
 Chenille.prototype.deplacer= function(){
+    //sauvegarde coord de la tete avant depl.
+   var ancien_x_tete = this.tete.x;
+   var ancien_y_tete = this.tete.y;
+    
+    //this.anneaux[0].dessiner(this.canvas.getContext("2d"));
+    
+    for (var i=this.anneaux.length - 1; i>0; i--)
+      {
+      this.anneaux[i].x = this.anneaux[i-1].x;
+      this.anneaux[i].y = this.anneaux[i-1].y;
+      //this.anneaux[i].dessiner(this.canvas.getContext("2d"));
+      }
+      
+      this.anneaux[0].x = ancien_x_tete;
+      this.anneaux[0].y = ancien_y_tete;
+    
+      this.tete.deplacer(this.canvas);
 
-    this.tete.deplacer(this.canvas);
 };
 
 function Tete(xInit, yInit, rInit, cap){
@@ -109,6 +125,7 @@ console.log("Y vaut: " +this.y );
 
 Tete.prototype.deplacerSelonCap = function(){
     var cap_rad = this.cap * Math.PI / 180; 
+    
   this.x = this.x + this.r * Math.cos(cap_rad);
   this.y = this.y + this.r * Math.sin(cap_rad);
 };
@@ -151,17 +168,22 @@ function init(){
     var ctxt = canvas.getContext("2d");
     
     // une chenille de 10 anneaux + 1 tete , rayon=10
-    var chenille1 = new Chenille(canvas, 20, 10);
     
     
-    
-    
-    document.getElementById("startBtn").onclick = function() {        
-    // dessine une chenille
+    var chenille1 = new Chenille(canvas, 3, 10);
     chenille1.dessiner();
     
     
-    timerId = setInterval( function() 
+    
+    document.getElementById("startBtn").onclick = function() {
+        document.getElementById("settings").disabled=true;
+        document.getElementById("stopBtn").disabled=false;
+        
+    // dessine une chenille
+  
+    
+    
+        timerId = setInterval( function() 
                             {
                             // la fonction invoquée périodiquement (toutes les 20 ms) par le timer
                             ctxt.clearRect(0, 0, canvas.width, canvas.height);
@@ -173,6 +195,26 @@ function init(){
     
     
     };
+    
+    document.getElementById("stopBtn").onclick = function() {
+        document.getElementById("startBtn").disabled = false;
+        document.getElementById("settings").disabled = false;
+        // interruption du timer
+        clearInterval(timerId);
+    }
+    
+    document.getElementById("settings").onclick = function() {
+        
+        var nbanneaux = parseInt(document.getElementById("anneaux").value);
+        var rayon = parseInt(document.getElementById("rayon").value);
+        
+        ctxt.clearRect(0, 0, canvas.width, canvas.height);
+        
+        chenille1 = new Chenille(canvas, nbanneaux + 1, rayon);
+        
+    }
+    
+    
 }
 
 
