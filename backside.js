@@ -76,7 +76,7 @@ Tete.prototype.dessiner = function(ctxt){
     ctxt.beginPath();
     ctxt.arc(this.x,this.y,this.r,0,2*Math.PI);
     ctxt.strokeStyle="black";
-    ctxt.fillStyle="black";
+    ctxt.fillStyle="#027c02";
     ctxt.stroke();
     ctxt.fill();
 };
@@ -153,11 +153,19 @@ Anneau.prototype.dessiner = function(ctxt){
     //affiche l'anneau
     ctxt.beginPath();
     ctxt.arc(this.x,this.y,this.r,0,2*Math.PI);
-    ctxt.strokeStyle="blue";
-    ctxt.fillStyle="orange";
+    ctxt.strokeStyle="#057005";
+    ctxt.fillStyle="#0cad0c";
     ctxt.stroke();
     ctxt.fill();
 };
+function creation_tab_chenilles(canvas,nbchenilles, nbanneaux, rayon){
+    var tab_chenilles = Array(nbchenilles);
+    
+    for (var i=0; i< tab_chenilles.length; i++){
+        tab_chenilles[i] = new Chenille(canvas, nbanneaux, rayon);
+    }
+    return tab_chenilles;
+}
 
 function init(){
     // dessiner une chenille
@@ -167,11 +175,15 @@ function init(){
    // var largeur = canvas.width;
     var ctxt = canvas.getContext("2d");
     
+     //Creation d'un tableau de chenilles
     // une chenille de 10 anneaux + 1 tete , rayon=10
+    var tab_chenilles =Array();
+    tab_chenilles = creation_tab_chenilles(canvas,1,3,10);
     
-    
-    var chenille1 = new Chenille(canvas, 3, 10);
-    chenille1.dessiner();
+    for (i=0; i<tab_chenilles.length; i++){
+        tab_chenilles[i].dessiner();
+    }
+        
     
     
     
@@ -187,8 +199,11 @@ function init(){
                             {
                             // la fonction invoquée périodiquement (toutes les 20 ms) par le timer
                             ctxt.clearRect(0, 0, canvas.width, canvas.height);
-                            chenille1.deplacer();
-                            chenille1.dessiner();
+                            for (i=0; i<tab_chenilles.length; i++)
+                                {
+                                tab_chenilles[i].deplacer();
+                                tab_chenilles[i].dessiner();
+                                }
                             }
                          , 100);
     
@@ -201,18 +216,22 @@ function init(){
         document.getElementById("settings").disabled = false;
         // interruption du timer
         clearInterval(timerId);
-    }
+    };
     
     document.getElementById("settings").onclick = function() {
         
         var nbanneaux = parseInt(document.getElementById("anneaux").value);
         var rayon = parseInt(document.getElementById("rayon").value);
+        var nbchenilles = parseInt(document.getElementById("nbchenilles").value);
         
         ctxt.clearRect(0, 0, canvas.width, canvas.height);
         
-        chenille1 = new Chenille(canvas, nbanneaux + 1, rayon);
         
-    }
+        tab_chenilles = creation_tab_chenilles(canvas,nbchenilles,nbanneaux,rayon);
+        
+        //chenille1 = new Chenille(canvas, nbanneaux + 1, rayon);
+        
+    };
     
     
 }
