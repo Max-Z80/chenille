@@ -190,7 +190,7 @@ function init(){
     document.getElementById("startBtn").onclick = function() {
         document.getElementById("settings").disabled=true;
         document.getElementById("stopBtn").disabled=false;
-        
+        document.getElementById("startBtn").disabled = true;
     // dessine une chenille
   
     
@@ -228,9 +228,7 @@ function init(){
         
         
         tab_chenilles = creation_tab_chenilles(canvas,nbchenilles,nbanneaux,rayon);
-        
-        //chenille1 = new Chenille(canvas, nbanneaux + 1, rayon);
-        
+                
     };
     
     
